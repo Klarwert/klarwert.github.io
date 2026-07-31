@@ -1,0 +1,76 @@
+---
+import { RELEASES_LATEST_URL, APP_REPO } from "../lib/repo";
+
+interface Props {
+  /** Anzeigetext, bevor die echte Datei ermittelt wurde (JS-Fallback: Link geht auf die Release-Seite). */
+  fallbackLabel: string;
+  /** Muster für die primäre Installationsdatei, in Prioritätsreihenfolge (z. B. .exe vor .msi). */
+  primaryPatterns: string[];
+  /** Optionale Muster für alternative Formate (z. B. .deb/.rpm), werden klein darunter verlinkt. */
+  secondaryPatterns?: { label: string; pattern: string }[];
+}
+
+const { fallbackLabel, primaryPatterns, secondaryPatterns = [] } = Astro.props;
+---
+
+<div class="mt-6">
+  <a
+    id="primary-download"
+    href={RELEASES_LATEST_URL}
+    class="inline-block rounded-klein bg-petrol px-5 py-3 font-medium text-card"
+  >
+    {fallbackLabel}
+  </a>
+  <p id="primary-download-hint" class="mt-2 text-xs text-slate"></p>
+  <ul id="secondary-downloads" class="mt-2 space-y-0.5 text-xs text-slate"></ul>
+</div>
+
+<script define:vars={{ primaryPatterns, secondaryPatterns, appRepo: APP_REPO }}>
+  // Rein clientseitig: ermittelt beim Laden die tatsächlich aktuelle Installationsdatei aus dem
+  // neuesten GitHub-Release, damit der Nutzer nie zwischen mehreren Assets wählen muss und die
+  // Website bei neuen Versionen nicht manuell gepflegt werden muss. Ohne funktionierendes JS/API
+  // bleibt der Button auf die normale Release-Seite verlinkt (Fallback).
+  (async () => {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${appRepo}/releases/latest`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const assets = Array.isArray(data.assets) ? data.assets : [];
+
+      function pick(patterns) {
+        for (const p of patterns) {
+          const re = new RegExp(p, "i");
+          const match = assets.find((a) => re.test(a.name));
+          if (match) return match;
+        }
+        return undefined;
+      }
+
+      const primary = pick(primaryPatterns);
+      const btn = document.getElementById("primary-download");
+      const hint = document.getElementById("primary-download-hint");
+      if (primary && btn) {
+        btn.href = primary.browser_download_url;
+        btn.textContent = `${primary.name} herunterladen`;
+        if (hint) hint.textContent = `${data.tag_name ?? ""} · ${(primary.size / 1_000_000).toFixed(1)} MB`;
+      }
+
+      const list = document.getElementById("secondary-downloads");
+      if (list) {
+        for (const { label, pattern } of secondaryPatterns) {
+          const match = pick([pattern]);
+          if (!match) continue;
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = match.browser_download_url;
+          a.className = "underline hover:text-petrol";
+          a.textContent = label;
+          li.appendChild(a);
+          list.appendChild(li);
+        }
+      }
+    } catch {
+      // Fallback bleibt aktiv: Button verweist auf die Release-Seite.
+    }
+  })();
+</script>

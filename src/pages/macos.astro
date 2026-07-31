@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PrimaryDownload from "../components/PrimaryDownload.astro";
+---
+
+<Layout title="Klarwert für macOS" description="Klarwert für macOS herunterladen und installieren.">
+  <section class="mx-auto max-w-2xl px-6 py-20">
+    <h1 class="text-3xl text-petrol">Klarwert für macOS</h1>
+
+    <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
+
+    <h2 class="mt-10 text-xl text-petrol">Installation</h2>
+    <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
+      <li>.dmg-Datei öffnen, Klarwert in den Programme-Ordner ziehen.</li>
+      <li>
+        Klarwert ist (noch) nicht bei Apple signiert/notarisiert. Beim ersten Öffnen meldet macOS deshalb entweder
+        „Klarwert kann nicht geöffnet werden, da der Entwickler nicht verifiziert werden kann" <strong>oder</strong>
+        „Klarwert ist beschädigt und kann nicht geöffnet werden" – beides ist normal, die Datei ist nicht wirklich
+        beschädigt.
+      </li>
+      <li>
+        Bei der ersten Meldung reicht: <strong>Systemeinstellungen → Datenschutz & Sicherheit</strong> → runter zu
+        „Sicherheit" → <strong>„Trotzdem öffnen"</strong>.
+      </li>
+      <li>
+        Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von
+        macOS, keine sonstige Änderung): Terminal öffnen und
+        <pre class="mt-1 overflow-x-auto rounded-klein bg-charcoal px-3 py-2 text-xs text-card"><code>xattr -cr /Applications/Klarwert.app</code></pre>
+        ausführen, danach Klarwert normal per Doppelklick starten.
+      </li>
+    </ol>
+
+    <h2 class="mt-10 text-xl text-petrol">Systemvoraussetzungen</h2>
+    <p class="mt-2 text-sm text-charcoal/80">macOS 12 (Monterey) oder neuer, Apple Silicon (M1 oder neuer).</p>
+  </section>
+</Layout>

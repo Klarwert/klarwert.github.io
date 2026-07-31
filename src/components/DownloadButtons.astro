@@ -1,0 +1,34 @@
+<div id="download-buttons" class="flex flex-wrap justify-center gap-3">
+  <a data-os="windows" href="windows" class="download-btn rounded-klein border border-petrol px-5 py-3 font-medium text-petrol transition-colors">
+    Windows Download →
+  </a>
+  <a data-os="macos" href="macos" class="download-btn rounded-klein border border-petrol px-5 py-3 font-medium text-petrol transition-colors">
+    macOS Download →
+  </a>
+  <a data-os="linux" href="linux" class="download-btn rounded-klein border border-petrol px-5 py-3 font-medium text-petrol transition-colors">
+    Linux Download →
+  </a>
+</div>
+
+<style>
+  .download-btn.is-detected {
+    background-color: var(--color-petrol);
+    color: var(--color-card);
+  }
+</style>
+
+<script>
+  // Rein clientseitige, einmalige UA-Prüfung zur visuellen Hervorhebung – kein Tracking, keine Datenübertragung.
+  function detectOs(): "windows" | "macos" | "linux" | null {
+    const ua = navigator.userAgent;
+    if (/Windows/i.test(ua)) return "windows";
+    if (/Mac OS X|Macintosh/i.test(ua)) return "macos";
+    if (/Linux/i.test(ua) && !/Android/i.test(ua)) return "linux";
+    return null;
+  }
+
+  const detected = detectOs();
+  if (detected) {
+    document.querySelector(`.download-btn[data-os="${detected}"]`)?.classList.add("is-detected");
+  }
+</script>

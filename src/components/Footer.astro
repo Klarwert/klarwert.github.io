@@ -1,0 +1,17 @@
+---
+import { ISSUES_BUG_URL, ISSUES_FEATURE_URL, DISCUSSIONS_URL } from "../lib/repo";
+---
+
+<footer class="border-t border-slate/20 bg-card px-6 py-8 text-sm text-slate">
+  <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6">
+    <a class="hover:text-petrol" href={ISSUES_BUG_URL} target="_blank" rel="noopener noreferrer">
+      🐛 Fehler melden
+    </a>
+    <a class="hover:text-petrol" href={ISSUES_FEATURE_URL} target="_blank" rel="noopener noreferrer">
+      💡 Feature vorschlagen
+    </a>
+    <a class="hover:text-petrol" href={DISCUSSIONS_URL} target="_blank" rel="noopener noreferrer">
+      💬 Frage stellen
+    </a>
+  </div>
+</footer>
