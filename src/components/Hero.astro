@@ -344,36 +344,45 @@ import DownloadButtons from "./DownloadButtons.astro";
   ];
   (function(){
     function startCrossfade(){
-      const container = document.getElementById("example-crossfade");
-      if (!container) return;
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      let idx = 0;
-      // ensure initial state
-      const show = (i)=>{
-        const ex = examples[i % examples.length];
-        container.style.transition = 'opacity 0.4s ease';
-        container.style.opacity = '0';
-        setTimeout(()=>{
-          container.innerHTML = `
-           <span class="example-text font-mono text-charcoal">${ex.text}</span>
-           <span class="example-arrow text-slate">→</span>
-           <span class="example-badge rounded px-1.5 py-0.5 text-xs ${ex.colorClass}">${ex.badge}</span>
-        `;
-          container.style.opacity = '1';
-        }, 250);
-      };
+      try{
+        const container = document.getElementById("example-crossfade");
+        if (!container) return;
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      show(0);
-      setInterval(()=>{
-        idx = (idx+1) % examples.length;
-        show(idx);
-      }, 3000);
-    }
+        // locate or create child elements so we can update text safely
+        let txt = container.querySelector('.example-text');
+        let badge = container.querySelector('.example-badge');
+        if (!txt) {
+          txt = document.createElement('span');
+          txt.className = 'example-text font-mono text-charcoal';
+          container.insertBefore(txt, container.firstChild);
+        }
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'example-badge rounded px-1.5 py-0.5 text-xs bg-gold/18 text-gold';
+          container.appendChild(badge);
+        }
+        const arrow = container.querySelector('.example-arrow') || (()=>{const s=document.createElement('span'); s.className='example-arrow text-slate'; s.textContent='→'; container.insertBefore(s, badge); return s;})();
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', startCrossfade);
-    } else {
-      startCrossfade();
+        let idx = 0;
+        const show = (i)=>{
+          const ex = examples[i % examples.length];
+          container.style.transition = 'opacity 0.35s ease';
+          container.style.opacity = '0';
+          setTimeout(()=>{
+            txt.textContent = ex.text;
+            // update badge classes safely
+            badge.textContent = ex.badge;
+            badge.className = 'example-badge rounded px-1.5 py-0.5 text-xs ' + ex.colorClass;
+            container.style.opacity = '1';
+          }, 220);
+        };
+        show(0);
+        setInterval(()=>{ idx = (idx+1) % examples.length; show(idx); }, 3000);
+      }catch(e){
+        console.error('crossfade failed', e);
+      }
     }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startCrossfade); else startCrossfade();
   })();
 </script>

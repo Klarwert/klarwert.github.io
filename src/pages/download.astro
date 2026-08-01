@@ -15,17 +15,17 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       </div>
 
       <div class="mt-6">
-        <div data-panel="windows" class="download-panel">
+        <div data-panel="windows" class="download-panel" style="display:block;">
           <PrimaryDownload fallbackLabel="Setup herunterladen" primaryPatterns={["-setup\\.exe$","\\.msi$"]} secondaryPatterns={[{label: 'Alternative: .msi-Installer', pattern: '\\.msi$'}]} />
           <p class="mt-6 text-sm text-charcoal/80">Windows 10 (Version 2004+) oder Windows 11. WebView2 wird benötigt.</p>
         </div>
 
-        <div data-panel="macos" class="download-panel hidden">
+        <div data-panel="macos" class="download-panel" style="display:none;">
           <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
           <p class="mt-6 text-sm text-charcoal/80">macOS 12 (Monterey) oder neuer. Apple Silicon empfohlen.</p>
         </div>
 
-        <div data-panel="linux" class="download-panel hidden">
+        <div data-panel="linux" class="download-panel" style="display:none;">
           <PrimaryDownload fallbackLabel="AppImage herunterladen" primaryPatterns={["\\.appimage$"]} secondaryPatterns={[{label: 'Alternative: .deb-Paket (Debian/Ubuntu)', pattern: '\\.deb$'},{label: 'Alternative: .rpm-Paket (Fedora/openSUSE)', pattern: '\\.rpm$'}]} />
           <p class="mt-6 text-sm text-charcoal/80">Aktuelle Distribution mit WebKitGTK.</p>
         </div>
@@ -43,6 +43,8 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
         // default Windows
         show('windows');
         tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.os)));
+        // also support keyboard activation
+        tabs.forEach(t=> t.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(t.dataset.os); } }));
       })();
     </script>
   </section>
