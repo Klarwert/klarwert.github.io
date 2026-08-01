@@ -17,17 +17,50 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       <div class="mt-6">
         <div data-panel="windows" class="download-panel" style="display:block;">
           <PrimaryDownload fallbackLabel="Setup herunterladen" primaryPatterns={["-setup\\.exe$","\\.msi$"]} secondaryPatterns={[{label: 'Alternative: .msi-Installer', pattern: '\\.msi$'}]} />
-          <p class="mt-6 text-sm text-charcoal/80">Windows 10 (Version 2004+) oder Windows 11. WebView2 wird benötigt.</p>
+          <h2 class="mt-8 text-xl text-petrol">Installation</h2>
+          <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
+            <li>Datei herunterladen und ausführen.</li>
+            <li>
+              Windows zeigt eventuell die Meldung <strong>„Windows hat Ihren PC geschützt"</strong> (SmartScreen). Das ist normal bei neuer, unsignierter Software – klicke auf <strong>„Weitere Informationen"</strong> und dann <strong>„Trotzdem ausführen"</strong>.
+            </li>
+            <li>Installation folgen, Klarwert startet automatisch.</li>
+          </ol>
+          <h2 class="mt-6 text-xl text-petrol">Systemvoraussetzungen</h2>
+          <p class="mt-2 text-sm text-charcoal/80">Windows 10 (Version 2004+) oder Windows 11. WebView2 wird benötigt.</p>
         </div>
 
         <div data-panel="macos" class="download-panel" style="display:none;">
           <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
-          <p class="mt-6 text-sm text-charcoal/80">macOS 12 (Monterey) oder neuer. Apple Silicon empfohlen.</p>
+          <h2 class="mt-8 text-xl text-petrol">Installation</h2>
+          <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
+            <li>.dmg-Datei öffnen, Klarwert in den Programme-Ordner ziehen.</li>
+            <li>
+              Klarwert ist (noch) nicht bei Apple signiert/notarisiert. Beim ersten Öffnen meldet macOS deshalb entweder
+              „Klarwert kann nicht geöffnet werden, da der Entwickler nicht verifiziert werden kann" <strong>oder</strong>
+              „Klarwert ist beschädigt und kann nicht geöffnet werden" – beides ist normal, die Datei ist nicht wirklich beschädigt.
+            </li>
+            <li>
+              Bei der ersten Meldung reicht: <strong>Systemeinstellungen → Datenschutz & Sicherheit</strong> → runter zu „Sicherheit" → <strong>„Trotzdem öffnen"</strong>.
+            </li>
+            <li>
+              Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von macOS):
+              <CodeBlock code="xattr -cr /Applications/Klarwert.app" />
+            </li>
+          </ol>
+          <h2 class="mt-6 text-xl text-petrol">Systemvoraussetzungen</h2>
+          <p class="mt-2 text-sm text-charcoal/80">macOS 12 (Monterey) oder neuer. Apple Silicon empfohlen.</p>
         </div>
 
         <div data-panel="linux" class="download-panel" style="display:none;">
           <PrimaryDownload fallbackLabel="AppImage herunterladen" primaryPatterns={["\\.appimage$"]} secondaryPatterns={[{label: 'Alternative: .deb-Paket (Debian/Ubuntu)', pattern: '\\.deb$'},{label: 'Alternative: .rpm-Paket (Fedora/openSUSE)', pattern: '\\.rpm$'}]} />
-          <p class="mt-6 text-sm text-charcoal/80">Aktuelle Distribution mit WebKitGTK.</p>
+          <h2 class="mt-8 text-xl text-petrol">Installation</h2>
+          <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
+            <li>.AppImage-Datei herunterladen.</li>
+            <li>Ausführbar machen: Rechtsklick → Eigenschaften → „Ausführung erlauben" (oder <code>chmod +x Klarwert*.AppImage</code> im Terminal).</li>
+            <li>Doppelklick startet Klarwert direkt, keine Installation nötig.</li>
+          </ol>
+          <h2 class="mt-6 text-xl text-petrol">Systemvoraussetzungen</h2>
+          <p class="mt-2 text-sm text-charcoal/80">Aktuelle Distribution mit WebKitGTK.</p>
         </div>
       </div>
     </div>
