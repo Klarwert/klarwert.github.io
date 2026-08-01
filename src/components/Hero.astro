@@ -1,0 +1,379 @@
+---
+import DownloadButtons from "./DownloadButtons.astro";
+---
+
+<section class="hero-section" id="hero">
+  <!-- Subtle background blobs -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+  </div>
+
+  <div class="hero-container" role="group">
+    <!-- Left column -->
+    <div class="hero-left">
+      <h1 class="hero-headline">
+        Klarheit über dein Geld.<br />Bleibt bei dir&nbsp;–&nbsp;sonst nirgends.
+      </h1>
+
+      <p class="hero-subhead">
+        Die kostenlose, lokale Finanz-App für Deutschland. CSV-Import,
+        automatische Kategorisierung, Budgets und Steuer-Vorbereitung –
+        ohne Cloud, ohne Abo, ohne Konto.
+      </p>
+
+      <!-- Crossfade Example -->
+      <div class="hero-example-box mt-2" aria-live="polite">
+        <span class="example-label text-slate text-[11px]">Klarwert erkennt automatisch:</span>
+        <div id="example-crossfade" class="example-content mt-1 flex items-center gap-2 text-sm">
+           <span class="example-text font-mono text-charcoal">Rewe Sagt Danke · 42,17 €</span>
+           <span class="example-arrow text-slate">→</span>
+           <span class="example-badge rounded px-1.5 py-0.5 text-xs bg-gold/18 text-gold">Lebensmittel</span>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="hero-ctas" id="download">
+        <DownloadButtons />
+        <a
+          href="https://github.com/AnselmJo/Klarwert"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cta-ghost"
+        >
+          Quellcode ansehen
+        </a>
+      </div>
+
+      <p class="hero-trust-line">
+        Kostenlos für immer. Kein Konto, keine Cloud, kein Abo.
+      </p>
+    </div>
+
+    <!-- Right column: Mockup -->
+    <div class="hero-right">
+
+      <!-- Notebook mockup -->
+      <div class="notebook-wrap">
+        <div class="notebook-frame">
+          <div class="notebook-screen">
+            <img
+              src="/klarwert-dashboard-dummy.svg"
+              alt="Klarwert Dashboard – Übersicht mit Sankey-Diagramm, Kategorien und Budgets"
+              class="notebook-img"
+              loading="eager"
+            />
+            <!-- Platzhalter, ersetzen sobald echte Screenshots vorliegen -->
+          </div>
+          <div class="notebook-chin"></div>
+        </div>
+
+        <!-- Floating cards -->
+        <div class="float-card animate-float-1 card-budget">
+          <p class="card-label">Budget Lebensmittel</p>
+          <p class="card-value card-value--charcoal">312&nbsp;€ / 400&nbsp;€</p>
+          <div class="card-bar">
+            <div class="card-bar-fill" style="width:78%"></div>
+          </div>
+        </div>
+
+        <div class="float-card animate-float-2 card-konto">
+          <p class="card-label">Kontostand gesamt</p>
+          <p class="card-value card-value--petrol">24.180&nbsp;€</p>
+          <p class="card-delta">+2,4&nbsp;%</p>
+        </div>
+
+        <div class="float-card animate-float-3 card-ausgaben">
+          <div>
+            <p class="card-label">Ausgaben August</p>
+            <p class="card-value card-value--brick">2.180&nbsp;€</p>
+          </div>
+          <!-- Mini donut -->
+          <svg class="mini-donut" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--slate)" stroke-width="4" stroke-dasharray="36 52"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--gold)"  stroke-width="4" stroke-dasharray="20 68" stroke-dashoffset="-36"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--sage)"  stroke-width="4" stroke-dasharray="16 72" stroke-dashoffset="-56"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ── */
+  .hero-section {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 1.5rem 3rem;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  /* ── Background blobs ── */
+  .hero-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+  .hero-blob-1 {
+    top: -10%;
+    right: -10%;
+    width: 60%;
+    height: 70%;
+    background: radial-gradient(circle, rgba(18,49,56,0.07) 0%, transparent 70%);
+  }
+  .hero-blob-2 {
+    bottom: -10%;
+    left: -10%;
+    width: 60%;
+    height: 70%;
+    background: radial-gradient(circle, rgba(183,154,91,0.07) 0%, transparent 70%);
+  }
+
+  /* ── Container grid ── */
+  .hero-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  /* ── Left column ── */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .hero-headline {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    color: var(--charcoal);
+    line-height: 1.2;
+  }
+
+  .hero-subhead {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: var(--slate);
+    line-height: 1.65;
+    max-width: 44ch;
+  }
+
+  /* ── Crossfade Example ── */
+  .example-content {
+    transition: opacity 0.4s ease;
+  }
+
+  /* ── CTAs ── */
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border: 1.5px solid var(--petrol);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--petrol);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .cta-ghost:hover {
+    background: var(--petrol);
+    color: var(--paper);
+    text-decoration: none;
+  }
+
+  .hero-trust-line {
+    font-size: 0.8125rem;
+    color: var(--slate);
+    font-weight: 500;
+  }
+
+  /* ── Right column ── */
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+  }
+
+
+  /* ── Notebook ── */
+  .notebook-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    z-index: 1;
+  }
+
+  .notebook-frame {
+    border-radius: 14px;
+    border: 8px solid #2a2623;
+    background: #2a2623;
+    box-shadow:
+      0 30px 80px rgba(18, 49, 56, 0.25),
+      0 0 0 1px rgba(18, 49, 56, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .notebook-screen {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .notebook-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  .notebook-chin {
+    height: 14px;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ── Floating cards ── */
+  .float-card {
+    position: absolute;
+    background: rgba(255, 253, 248, 0.80);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(18, 49, 56, 0.10);
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(18, 49, 56, 0.12);
+    padding: 0.875rem 1rem;
+    display: none; /* hidden on mobile */
+  }
+
+  @media (min-width: 768px) {
+    .float-card { display: block; }
+    .card-ausgaben { display: flex; gap: 0.75rem; align-items: center; }
+  }
+
+  .card-budget  { top: 6%;  left: -10%; width: 200px; z-index: 3; }
+  .card-konto   { top: 42%; right: -8%; width: 180px; z-index: 3; }
+  .card-ausgaben { bottom: 8%; left: 6%; width: 215px; z-index: 3; }
+
+  .card-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    color: var(--slate);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .card-value {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+  .card-value--charcoal { color: var(--charcoal); }
+  .card-value--petrol   { color: var(--petrol); }
+  .card-value--brick    { color: var(--brick); }
+
+  .card-delta {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--sage);
+  }
+
+  .card-bar {
+    height: 5px;
+    border-radius: 99px;
+    background: rgba(107,122,128,0.15);
+    overflow: hidden;
+  }
+  .card-bar-fill {
+    height: 100%;
+    background: var(--sage);
+    border-radius: 99px;
+  }
+
+  .mini-donut {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    transform: rotate(-90deg);
+  }
+</style>
+
+<script>
+  // ── Crossfade effect ──
+  const examples = [
+    { text: "Rewe Sagt Danke · 42,17 €", badge: "Lebensmittel", colorClass: "bg-gold/18 text-gold" },
+    { text: "Miete · 1.200,00 €", badge: "Wohnen", colorClass: "bg-slate/18 text-slate" },
+    { text: "Netflix · 12,99 €", badge: "Freizeit", colorClass: "bg-petrol-light/18 text-petrol-light" },
+    { text: "Sparplan Depot · 250,00 €", badge: "Sparen", colorClass: "bg-sage/18 text-sage" },
+  ];
+  (function(){
+    function startCrossfade(){
+      const container = document.getElementById("example-crossfade");
+      if (!container) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      let idx = 0;
+      // ensure initial state
+      const show = (i)=>{
+        const ex = examples[i % examples.length];
+        container.style.transition = 'opacity 0.4s ease';
+        container.style.opacity = '0';
+        setTimeout(()=>{
+          container.innerHTML = `
+           <span class="example-text font-mono text-charcoal">${ex.text}</span>
+           <span class="example-arrow text-slate">→</span>
+           <span class="example-badge rounded px-1.5 py-0.5 text-xs ${ex.colorClass}">${ex.badge}</span>
+        `;
+          container.style.opacity = '1';
+        }, 250);
+      };
+
+      show(0);
+      setInterval(()=>{
+        idx = (idx+1) % examples.length;
+        show(idx);
+      }, 3000);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startCrossfade);
+    } else {
+      startCrossfade();
+    }
+  })();
+</script>
