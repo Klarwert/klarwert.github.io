@@ -1,0 +1,30 @@
+/* Screenshot Section styles */
+.screenshot-section {
+  padding: 4rem 1rem;
+  background: var(--paper);
+  text-align: center;
+}
+
+.screenshot-section h2 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--charcoal);
+}
+
+.screenshot-section .screenshot-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.screenshot-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(18, 49, 56, 0.1);
+  /* glass-card style for consistency */
+  background: rgba(255, 253, 248, 0.62);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}

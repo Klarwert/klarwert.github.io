@@ -1,0 +1,85 @@
+<section class="screenshots-section reveal">
+  <div class="section-inner">
+    <h2>So sieht Klarwert aus</h2>
+    <p class="screenshots-sub">Eine Übersicht auf einen Blick.</p>
+
+    <div class="mockup-wrap">
+      <div class="mockup-frame">
+        <div class="mockup-screen">
+          <img
+            src="/klarwert-dashboard-dummy.svg"
+            alt="Klarwert Übersichts-Dashboard mit Sankey-Geldfluss, Kategorien-Donut und KPI-Karten"
+            loading="lazy"
+          />
+          <!-- Platzhalter, ersetzen sobald echte Screenshots vorliegen -->
+        </div>
+        <div class="mockup-chin"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .screenshots-section {
+    padding: 5rem 1.5rem;
+    background: var(--paper);
+  }
+
+  .section-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-inner h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--petrol);
+    margin-bottom: 0.5rem;
+  }
+
+  .screenshots-sub {
+    font-size: 1rem;
+    color: var(--slate);
+    margin-bottom: 2.5rem;
+  }
+
+  .mockup-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mockup-frame {
+    width: 100%;
+    max-width: 860px;
+    border-radius: 14px;
+    border: 8px solid #2a2623;
+    background: #2a2623;
+    box-shadow:
+      0 40px 100px rgba(18, 49, 56, 0.22),
+      0 0 0 1px rgba(18, 49, 56, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mockup-screen {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .mockup-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  .mockup-chin {
+    height: 14px;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+</style>

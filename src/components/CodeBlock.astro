@@ -1,0 +1,30 @@
+---
+export interface Props {
+  code: string;
+}
+const { code } = Astro.props;
+---
+<div class="code-block relative mt-1 overflow-hidden rounded-md bg-charcoal">
+  <pre class="overflow-x-auto px-4 py-3 text-xs text-card font-mono whitespace-pre" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'IBM Plex Mono', monospace;"><code>{code}</code></pre>
+  <button class="copy-btn absolute right-2 top-2 rounded p-1 text-slate hover:bg-slate/20 hover:text-card" aria-label="Kopieren" data-code={code}>
+    <svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+    <svg class="icon-check hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.getAttribute('data-code');
+      if (code) {
+        await navigator.clipboard.writeText(code);
+        btn.querySelector('.icon-copy')?.classList.add('hidden');
+        btn.querySelector('.icon-check')?.classList.remove('hidden');
+        setTimeout(() => {
+          btn.querySelector('.icon-copy')?.classList.remove('hidden');
+          btn.querySelector('.icon-check')?.classList.add('hidden');
+        }, 1500);
+      }
+    });
+  });
+</script>

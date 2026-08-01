@@ -1,0 +1,175 @@
+---
+const faqs = [
+  {
+    q: "Ist Klarwert wirklich kostenlos?",
+    a: "Ja, vollständig und für immer. Kein Abo, keine Pro-Version, keine versteckten Kosten. Klarwert ist Open Source und bleibt es.",
+  },
+  {
+    q: "Wo werden meine Daten gespeichert?",
+    a: "Ausschließlich auf deinem Gerät, in einer lokalen Datenbank. Klarwert hat keine Cloud, keinen Server und kein Login.",
+  },
+  {
+    q: "Verbindet sich Klarwert mit meiner Bank?",
+    a: "Nein, bewusst nicht. Du exportierst deine Umsätze als CSV oder Excel aus deinem Online-Banking und importierst sie manuell – so bleibt die Kontrolle bei dir, ohne dass du Bankzugangsdaten irgendwo hinterlegst.",
+  },
+  {
+    q: "Für welche Betriebssysteme gibt es Klarwert?",
+    a: "Windows, macOS und Linux.",
+  },
+  {
+    q: "Ist der Code einsehbar?",
+    a: "Ja, vollständig. Klarwert ist Open Source – du kannst jede Zeile Code auf GitHub nachlesen.",
+  },
+  {
+    q: "Unterstützt Klarwert andere Sprachen als Deutsch?",
+    a: "Aktuell ist Klarwert bewusst auf den deutschen Finanz- und Steuerkontext ausgelegt. Weitere Sprachen sind vorbereitet, aber noch nicht aktiv.",
+  },
+];
+---
+
+<section id="faq" class="faq-section reveal">
+  <div class="faq-inner">
+    <div class="section-header">
+      <h2>Häufige Fragen</h2>
+    </div>
+
+    <div class="accordion">
+      {faqs.map((f, i) => (
+        <div class="accordion-item glass-card">
+          <button
+            class="accordion-trigger"
+            id={`faq-btn-${i}`}
+            aria-expanded="false"
+            aria-controls={`faq-panel-${i}`}
+          >
+            <span>{f.q}</span>
+            <svg class="accordion-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+          <div
+            class="accordion-panel"
+            id={`faq-panel-${i}`}
+            role="region"
+            aria-labelledby={`faq-btn-${i}`}
+            hidden
+          >
+            <p>{f.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: 5rem 1.5rem;
+    background: rgba(243,239,228,0.5);
+  }
+
+  .faq-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--petrol);
+  }
+
+  .accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .accordion-item {
+    overflow: hidden;
+  }
+
+  .accordion-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.125rem 1.375rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.4;
+    transition: background 0.15s;
+  }
+
+  .accordion-trigger:hover {
+    background: rgba(18, 49, 56, 0.03);
+  }
+
+  .accordion-trigger:focus-visible {
+    outline: 2px solid var(--petrol);
+    outline-offset: -2px;
+  }
+
+  .accordion-chevron {
+    width: 18px;
+    height: 18px;
+    color: var(--petrol);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .accordion-item[data-open] .accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  .accordion-panel {
+    padding: 0 1.375rem 1.125rem;
+  }
+
+  .accordion-panel[hidden] {
+    display: none;
+  }
+
+  .accordion-panel p {
+    font-size: 0.9rem;
+    color: var(--slate);
+    line-height: 1.65;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.accordion-trigger').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.accordion-item') as HTMLElement;
+      const panelId = btn.getAttribute('aria-controls')!;
+      const panel = document.getElementById(panelId)!;
+      const isOpen = item.hasAttribute('data-open');
+
+      // close all
+      document.querySelectorAll('.accordion-item').forEach((el) => {
+        (el as HTMLElement).removeAttribute('data-open');
+        const p = el.querySelector('.accordion-panel') as HTMLElement;
+        p.hidden = true;
+        el.querySelector('.accordion-trigger')!.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.setAttribute('data-open', '');
+        panel.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>

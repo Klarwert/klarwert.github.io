@@ -1,0 +1,53 @@
+<section class="trustbar">
+  <div class="trustbar-inner">
+    {[
+      "100 % lokal – keine Cloud-Speicherung deiner Finanzdaten",
+      "Keine Kontodaten an Dritte – Import per CSV/Excel, keine Bankverbindung",
+      "Open Source – der komplette Code ist einsehbar",
+      "Kostenlos – für immer, keine Abos, keine Werbung",
+    ].map((text) => (
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+        </svg>
+        <span>{text}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .trustbar {
+    background: var(--card);
+    border-top: 1px solid rgba(18,49,56,0.06);
+    border-bottom: 1px solid rgba(18,49,56,0.06);
+    padding: 1.125rem 1.5rem;
+  }
+
+  .trustbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    white-space: nowrap;
+  }
+
+  .trust-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--sage);
+    flex-shrink: 0;
+  }
+</style>
