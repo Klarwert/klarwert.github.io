@@ -4,7 +4,7 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
 ---
 
 <Layout title="Klarwert für macOS" description="Klarwert für macOS herunterladen und installieren.">
-  <section class="mx-auto max-w-2xl px-6 py-20">
+  <section class="mx-auto max-w-[880px] px-6 py-20">
     <h1 class="text-3xl text-petrol">Klarwert für macOS</h1>
 
     <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
@@ -26,7 +26,7 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
         Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von
         macOS, keine sonstige Änderung): Terminal öffnen und
         <div class="mt-1 flex items-start gap-3">
-      <pre class="overflow-x-auto rounded-klein bg-charcoal px-3 py-2 text-xs text-card font-mono"><code id="mac-cmd">xattr -cr /Applications/Klarwert.app</code></pre>
+      <pre class="overflow-x-auto rounded-klein bg-charcoal px-3 py-2 text-xs text-card font-mono" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'IBM Plex Mono', monospace;"><code id="mac-cmd">xattr -cr /Applications/Klarwert.app</code></pre>
       <button id="copy-mac-cmd" class="mt-1 rounded-klein border border-slate/20 px-2 py-1 text-xs">Kopieren</button>
     </div>
 
