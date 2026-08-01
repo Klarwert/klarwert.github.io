@@ -29,4 +29,12 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       Windows 10 (Version 2004+) oder Windows 11. WebView2 ist bei aktuellem Windows bereits vorinstalliert.
     </p>
   </section>
+  <script>
+    // If JavaScript is enabled, route to the unified download page and preselect Windows tab.
+    if (typeof window !== 'undefined') {
+      if (location.pathname !== '/download' || !location.hash.includes('windows')) {
+        location.replace('/download#windows');
+      }
+    }
+  </script>
 </Layout>

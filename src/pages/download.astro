@@ -37,14 +37,23 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
         const tabs = document.querySelectorAll('#download-tabs .tab-btn');
         const panels = document.querySelectorAll('.download-panel');
         function show(os){
-          panels.forEach(p=> { p.dataset.panel===os ? p.classList.remove('hidden') : p.classList.add('hidden'); });
-          tabs.forEach(t=> { t.dataset.os===os ? t.classList.add('bg-card','border') : t.classList.remove('bg-card','border'); });
+          panels.forEach(p=> { p.style.display = (p.dataset.panel===os ? 'block' : 'none'); });
+          tabs.forEach(t=> {
+            if (t.dataset.os===os) {
+              t.classList.add('bg-card','border');
+              t.setAttribute('aria-pressed','true');
+            } else {
+              t.classList.remove('bg-card','border');
+              t.setAttribute('aria-pressed','false');
+            }
+          });
         }
-        // default Windows
-        show('windows');
-        tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.os)));
+        // pick from hash if present, otherwise default to windows
+        const target = (location.hash && location.hash.replace('#','')) || 'windows';
+        show(target);
+        tabs.forEach(t=> t.addEventListener('click', ()=> { show(t.dataset.os); history.replaceState(null,'', '/download#'+t.dataset.os); }));
         // also support keyboard activation
-        tabs.forEach(t=> t.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(t.dataset.os); } }));
+        tabs.forEach(t=> t.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(t.dataset.os); history.replaceState(null,'', '/download#'+t.dataset.os); } }));
       })();
     </script>
   </section>

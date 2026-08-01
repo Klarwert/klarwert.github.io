@@ -16,6 +16,9 @@ main.site-main > .site-content {
   padding-top: 6rem;    /* leave space for fixed header (approx 96px) */
 }
 
+/* Defensive: ensure any element using Tailwind-like utility 'mx-auto max-w-[1120px]' still behaves */
+.mx-auto.max-w-[1120px] { max-width: 1120px; margin-left: auto; margin-right: auto; }
+
 /* Make wide pages responsive and avoid right-side white bar by forcing full-bleed backgrounds
    while content sits centered inside the site-content container */
 .site-bleed {
@@ -24,27 +27,46 @@ main.site-main > .site-content {
   margin-right: calc(50% - 50vw);
 }
 
+/* Primary download button defensive styles (in case utility classes are missing) */
+#primary-download {
+  display: inline-block;
+  background: var(--petrol) !important;
+  color: var(--card) !important;
+  padding: 0.625rem 1.25rem;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
 /* Code block copy button: ensure contrast and visibility */
+.code-block { position: relative; }
 .code-block .copy-btn {
-  background: rgba(255, 255, 255, 0.06);
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
   color: var(--paper);
   border: 1px solid rgba(255,255,255,0.04);
   backdrop-filter: blur(6px);
   padding: 6px;
   border-radius: 8px;
   z-index: 40;
+  width: auto;
+  height: auto;
 }
 
 .code-block .copy-btn:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.20);
 }
 
-/* If the code area is narrow, make sure the button doesn't overlap text */
-.code-block { position: relative; }
-.code-block pre { padding-right: 3rem; }
+/* Ensure code text doesn't underlap the button */
+.code-block pre { padding-right: 4rem; }
 
 @media (max-width: 640px) {
   main.site-main > .site-content { padding-top: 5rem; }
-  .code-block pre { padding-right: 2.5rem; }
+  .code-block pre { padding-right: 3rem; }
+  .code-block .copy-btn { top: 6px; right: 6px; padding: 4px; }
 }
 

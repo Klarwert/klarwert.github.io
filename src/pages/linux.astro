@@ -31,4 +31,12 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       Aktuelle Distribution mit WebKitGTK (bei den gängigen Distributionen standardmäßig vorhanden).
     </p>
   </section>
+  <script>
+    // If JavaScript is enabled, route to the unified download page and preselect linux tab.
+    if (typeof window !== 'undefined') {
+      if (location.pathname !== '/download' || !location.hash.includes('linux')) {
+        location.replace('/download#linux');
+      }
+    }
+  </script>
 </Layout>
