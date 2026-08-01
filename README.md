@@ -18,4 +18,10 @@ npm run preview  # Build lokal ansehen
 - `src/components/` – Footer, Download-Buttons (mit clientseitiger OS-Erkennung)
 - `src/lib/repo.ts` – zentrale Repo-Referenzen (Releases-/Issue-Links)
 
-Deployment läuft über `.github/workflows/deploy-website.yml` bei jedem Push auf `main` (siehe Repo-Einstellungen → Pages → Source: "GitHub Actions").
+## Deployment
+
+Deployment läuft über `.github/workflows/deploy-website.yml` bei jedem Push auf `main`:
+- **Automatisch**: Jeder `git push origin main` triggert einen Build + Deploy nach https://klarwert.github.io/
+- **Pages-Konfiguration**: GitHub Pages Settings → Source: `GitHub Actions` (Workflow baut die dist/ automatisch)
+- **Verifikation lokal**: `npm run build && npm run preview` zeigt die finale Ausgabe vor dem Push
+- **Troubleshooting**: Falls Live-Site veraltet wirkt, alle Browser-Caches clearen (Incognito Mode nutzen) oder `git push origin main` erneut ausführen
