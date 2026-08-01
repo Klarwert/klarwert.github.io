@@ -30,24 +30,8 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       <button id="copy-mac-cmd" class="mt-1 rounded-klein border border-slate/20 px-2 py-1 text-xs">Kopieren</button>
     </div>
 
-    <script>
-      (function(){
-        const btn = document.getElementById('copy-mac-cmd');
-        const cmd = document.getElementById('mac-cmd');
-        if(!btn || !cmd) return;
-        btn.addEventListener('click', async () => {
-          try{
-            await navigator.clipboard.writeText(cmd.textContent.trim());
-            btn.textContent = 'Kopiert';
-            setTimeout(()=> btn.textContent = 'Kopieren', 1500);
-          }catch(e){
-            btn.textContent = 'Fehler';
-            setTimeout(()=> btn.textContent = 'Kopieren', 1500);
-          }
-        });
-      })();
-    </script>
-        ausführen, danach Klarwert normal per Doppelklick starten.
+    <script type="module" src="/scripts/macos-copy.js"></script>
+        <span>ausführen, danach Klarwert normal per Doppelklick starten.</span>
       </li>
     </ol>
 
