@@ -109,31 +109,43 @@ import DownloadButtons from "./DownloadButtons.astro";
     align-items: center;
     padding: 6rem 1.5rem 3rem;
     background: var(--paper);
-    overflow: hidden;
+    overflow: visible; /* allow full-bleed blobs to extend to viewport edges */
   }
 
-  /* ── Background blobs ── */
-  .hero-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  /* ── Background blobs (full-bleed) ── */
+  .hero-bg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100vw; /* span the entire viewport */
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
   .hero-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
   }
+
   .hero-blob-1 {
-    top: -20%;
-    right: -20%;
-    width: 140%;
-    height: 140%;
+    top: -25%;
+    right: 10%;
+    width: 160%;
+    height: 160%;
     background: radial-gradient(circle at 70% 30%, rgba(18,49,56,0.12) 0%, rgba(18,49,56,0.08) 30%, rgba(18,49,56,0.03) 60%, rgba(18,49,56,0.00) 100%);
-    filter: blur(110px);
+    filter: blur(120px);
   }
+
   .hero-blob-2 {
-    bottom: -20%;
-    left: -20%;
-    width: 140%;
-    height: 140%;
+    bottom: -25%;
+    left: 10%;
+    width: 160%;
+    height: 160%;
     background: radial-gradient(circle at 30% 70%, rgba(183,154,91,0.10) 0%, rgba(183,154,91,0.06) 30%, rgba(183,154,91,0.02) 60%, rgba(183,154,91,0.00) 100%);
-    filter: blur(110px);
+    filter: blur(120px);
   }
 
   /* ── Container grid ── */
