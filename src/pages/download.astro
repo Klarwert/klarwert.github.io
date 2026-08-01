@@ -1,0 +1,49 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PrimaryDownload from "../components/PrimaryDownload.astro";
+---
+
+<Layout title="Klarwert herunterladen" description="Lade Klarwert für Windows, macOS oder Linux herunter.">
+  <section class="mx-auto max-w-[1120px] px-6 py-20">
+    <h1 class="text-3xl text-petrol">Herunterladen</h1>
+
+    <div class="mt-6">
+      <div id="download-tabs" class="flex gap-3">
+        <button data-os="windows" class="tab-btn rounded-klein px-4 py-2 bg-card border">Windows</button>
+        <button data-os="macos" class="tab-btn rounded-klein px-4 py-2">macOS</button>
+        <button data-os="linux" class="tab-btn rounded-klein px-4 py-2">Linux</button>
+      </div>
+
+      <div class="mt-6">
+        <div data-panel="windows" class="download-panel">
+          <PrimaryDownload fallbackLabel="Setup herunterladen" primaryPatterns={["-setup\\.exe$","\\.msi$"]} secondaryPatterns={[{label: 'Alternative: .msi-Installer', pattern: '\\.msi$'}]} />
+          <p class="mt-6 text-sm text-charcoal/80">Windows 10 (Version 2004+) oder Windows 11. WebView2 wird benötigt.</p>
+        </div>
+
+        <div data-panel="macos" class="download-panel hidden">
+          <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
+          <p class="mt-6 text-sm text-charcoal/80">macOS 12 (Monterey) oder neuer. Apple Silicon empfohlen.</p>
+        </div>
+
+        <div data-panel="linux" class="download-panel hidden">
+          <PrimaryDownload fallbackLabel="AppImage herunterladen" primaryPatterns={["\\.appimage$"]} secondaryPatterns={[{label: 'Alternative: .deb-Paket (Debian/Ubuntu)', pattern: '\\.deb$'},{label: 'Alternative: .rpm-Paket (Fedora/openSUSE)', pattern: '\\.rpm$'}]} />
+          <p class="mt-6 text-sm text-charcoal/80">Aktuelle Distribution mit WebKitGTK.</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const tabs = document.querySelectorAll('#download-tabs .tab-btn');
+        const panels = document.querySelectorAll('.download-panel');
+        function show(os){
+          panels.forEach(p=> { p.dataset.panel===os ? p.classList.remove('hidden') : p.classList.add('hidden'); });
+          tabs.forEach(t=> { t.dataset.os===os ? t.classList.add('bg-card','border') : t.classList.remove('bg-card','border'); });
+        }
+        // default Windows
+        show('windows');
+        tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.os)));
+      })();
+    </script>
+  </section>
+</Layout>

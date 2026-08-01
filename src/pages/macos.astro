@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PrimaryDownload from "../components/PrimaryDownload.astro";
+import CodeBlock from "../components/CodeBlock.astro";
 ---
 
 <Layout title="Klarwert für macOS" description="Klarwert für macOS herunterladen und installieren.">
-  <section class="mx-auto max-w-2xl px-6 py-20">
+  <section class="mx-auto max-w-[880px] px-6 py-20">
     <h1 class="text-3xl text-petrol">Klarwert für macOS</h1>
 
     <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
@@ -25,7 +26,7 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       <li>
         Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von
         macOS, keine sonstige Änderung): Terminal öffnen und
-        <pre class="mt-1 overflow-x-auto rounded-klein bg-charcoal px-3 py-2 text-xs text-card"><code>xattr -cr /Applications/Klarwert.app</code></pre>
+        <CodeBlock code="xattr -cr /Applications/Klarwert.app" />
         ausführen, danach Klarwert normal per Doppelklick starten.
       </li>
     </ol>

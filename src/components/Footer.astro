@@ -1,17 +1,179 @@
 ---
 import { ISSUES_BUG_URL, ISSUES_FEATURE_URL, DISCUSSIONS_URL } from "../lib/repo";
+
+let stars: string | number = "—";
+let lastRelease = "—";
+let lastCommit = "—";
+
+try {
+  const [repoRes, releaseRes, commitRes] = await Promise.all([
+    fetch("https://api.github.com/repos/AnselmJo/Klarwert"),
+    fetch("https://api.github.com/repos/AnselmJo/Klarwert/releases/latest"),
+    fetch("https://api.github.com/repos/AnselmJo/Klarwert/commits?per_page=1"),
+  ]);
+  if (repoRes.ok)    { const d = await repoRes.json();    stars       = d.stargazers_count ?? "—"; }
+  if (releaseRes.ok) { const d = await releaseRes.json(); lastRelease = d.tag_name ?? "—"; }
+  if (commitRes.ok)  { const d = await commitRes.json();  lastCommit  = (d[0]?.sha as string)?.slice(0, 7) ?? "—"; }
+} catch { /* keep fallback values */ }
 ---
 
-<footer class="border-t border-slate/20 bg-card px-6 py-8 text-sm text-slate">
-  <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6">
-    <a class="hover:text-petrol" href={ISSUES_BUG_URL} target="_blank" rel="noopener noreferrer">
-      🐛 Fehler melden
-    </a>
-    <a class="hover:text-petrol" href={ISSUES_FEATURE_URL} target="_blank" rel="noopener noreferrer">
-      💡 Feature vorschlagen
-    </a>
-    <a class="hover:text-petrol" href={DISCUSSIONS_URL} target="_blank" rel="noopener noreferrer">
-      💬 Frage stellen
-    </a>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <img src="/klarwert-icon.svg" alt="" class="footer-icon" aria-hidden="true" />
+      <div>
+        <p class="footer-tagline">Klarwert – deine Finanzen, ganz bei dir.</p>
+        <p class="footer-license">Lizenz: MIT &middot; Open Source</p>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <nav class="footer-links" aria-label="Support-Links">
+      <a href={ISSUES_BUG_URL} target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+        Fehler melden
+      </a>
+      <a href={ISSUES_FEATURE_URL} target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5z"/></svg>
+        Feature vorschlagen
+      </a>
+      <a href={DISCUSSIONS_URL} target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902 1.168.188 2.352.327 3.55.414.28.02.521.18.642.413l1.713 3.293a.75.75 0 0 0 1.33 0l1.713-3.293a.643.643 0 0 1 .642-.413 41.102 41.102 0 0 0 3.55-.414c1.437-.231 2.43-1.49 2.43-2.902V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0 0 10 2z" clip-rule="evenodd"/></svg>
+        Frage stellen
+      </a>
+    </nav>
+
+    <!-- GitHub stats -->
+    <div class="footer-stats">
+      <div class="stat">
+        <span class="stat-value">{stars}</span>
+        <span class="stat-label">Stars</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{lastRelease}</span>
+        <span class="stat-label">Release</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{lastCommit}</span>
+        <span class="stat-label">Commit</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© {new Date().getFullYear()} Klarwert. Open Source unter MIT-Lizenz.</p>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    background: var(--card);
+    border-top: 1px solid rgba(18, 49, 56, 0.08);
+    margin-top: 4rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .footer-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .footer-tagline {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: var(--charcoal);
+  }
+
+  .footer-license {
+    font-size: 0.8125rem;
+    color: var(--slate);
+    margin-top: 0.2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    align-items: center;
+  }
+
+  .footer-links a {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    color: var(--slate);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--petrol);
+    text-decoration: none;
+  }
+
+  .footer-links svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  .footer-stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+  }
+
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(18, 49, 56, 0.06);
+    padding: 0.875rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8125rem;
+    color: var(--slate);
+  }
+</style>

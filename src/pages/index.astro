@@ -1,53 +1,39 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import DownloadButtons from "../components/DownloadButtons.astro";
-
-const features = [
-  "100 % lokal – keine Cloud-Speicherung deiner Finanzdaten",
-  "Keine Kontodaten an Dritte – Import per CSV/Excel, keine Bankverbindung",
-  "Open Source – der komplette Code ist einsehbar",
-  "Kostenlos – keine Kosten, keine Abos, keine Werbung",
-];
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import Features from "../components/Features.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import Screenshots from "../components/Screenshots.astro";
+import FAQ from "../components/FAQ.astro";
 ---
 
 <Layout
   title="Klarwert – deine Finanzen, zu 100 % lokal"
-  description="Ein kostenloses Open-Source-Finanztool. Deine Daten bleiben auf deinem Gerät – keine Cloud, kein Login, keine Kontodaten an Dritte."
+  description="Die kostenlose, lokale Finanz-App für Deutschland. CSV-Import, automatische Kategorisierung, Budgets und Steuer-Vorbereitung – ohne Cloud, ohne Abo, ohne Konto."
 >
-  <section class="mx-auto max-w-3xl px-6 py-20 text-center">
-    <h1 class="text-4xl text-petrol">Klarwert – deine Finanzen, zu 100 % lokal</h1>
-    <p class="mt-4 text-lg text-charcoal/80">
-      Ein kostenloses Open-Source-Finanztool. Deine Daten bleiben auf deinem Gerät – keine Cloud, kein Login,
-      keine Kontodaten an Dritte.
-    </p>
+  <Hero />
+  <TrustBar />
+  <Features />
+  <HowItWorks />
+  <Screenshots />
+  <FAQ />
 
-    <div class="mt-8">
-      <DownloadButtons />
-    </div>
-
-    <ul class="mt-12 grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
-      {
-        features.map((f) => (
-          <li class="rounded-standard border border-slate/20 bg-card p-4 text-sm">
-            <span class="text-sage">✓</span> {f}
-          </li>
-        ))
-      }
-    </ul>
-
-    <section class="mt-16 text-left">
-      <h2 class="text-2xl text-petrol">Was Klarwert kann</h2>
-      <ul class="mt-4 list-inside list-disc space-y-1 text-sm text-charcoal/80">
-        <li>Transaktions-Import mit automatischer Kategorisierung</li>
-        <li>Verträge & wiederkehrende Zahlungen</li>
-        <li>Sparen nach Zweck</li>
-        <li>Budgets</li>
-        <li>Steuer-Vorbereitung</li>
-        <li>Finanz-Rechner (FIRE/Zinseszins/Entnahmeplan)</li>
-      </ul>
-    </section>
-
-    <!-- Screenshots-Platzhalter: hier Screenshots aus der laufenden App einfügen, sobald verfügbar
-         (Übersicht, Transaktionen, Verträge). Bewusst leer gelassen, bis echte Screenshots existieren. -->
-  </section>
+  <script>
+    // Scroll-reveal via IntersectionObserver
+    const elements = document.querySelectorAll<HTMLElement>('.reveal');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      elements.forEach(el => el.classList.add('visible'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      elements.forEach(el => io.observe(el));
+    }
+  </script>
 </Layout>
