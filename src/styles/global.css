@@ -1,2 +1,50 @@
-/* Only import tokens — no component-specific CSS here */
+/* Tokens + base layout overrides */
 @import "./tokens.css";
+
+/* Ensure main content is always centered and leaves space for fixed header
+   (explicit rules so site doesn't break if utility classes are missing) */
+main.site-main {
+  width: 100%;
+}
+
+main.site-main > .site-content {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem; /* ~24px */
+  padding-right: 1.5rem;
+  padding-top: 6rem;    /* leave space for fixed header (approx 96px) */
+}
+
+/* Make wide pages responsive and avoid right-side white bar by forcing full-bleed backgrounds
+   while content sits centered inside the site-content container */
+.site-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Code block copy button: ensure contrast and visibility */
+.code-block .copy-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(6px);
+  padding: 6px;
+  border-radius: 8px;
+  z-index: 40;
+}
+
+.code-block .copy-btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* If the code area is narrow, make sure the button doesn't overlap text */
+.code-block { position: relative; }
+.code-block pre { padding-right: 3rem; }
+
+@media (max-width: 640px) {
+  main.site-main > .site-content { padding-top: 5rem; }
+  .code-block pre { padding-right: 2.5rem; }
+}
+
