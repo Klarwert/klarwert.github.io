@@ -25,7 +25,28 @@ import PrimaryDownload from "../components/PrimaryDownload.astro";
       <li>
         Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von
         macOS, keine sonstige Änderung): Terminal öffnen und
-        <pre class="mt-1 overflow-x-auto rounded-klein bg-charcoal px-3 py-2 text-xs text-card"><code>xattr -cr /Applications/Klarwert.app</code></pre>
+        <div class="mt-1 flex items-start gap-3">
+      <pre class="overflow-x-auto rounded-klein bg-charcoal px-3 py-2 text-xs text-card font-mono"><code id="mac-cmd">xattr -cr /Applications/Klarwert.app</code></pre>
+      <button id="copy-mac-cmd" class="mt-1 rounded-klein border border-slate/20 px-2 py-1 text-xs">Kopieren</button>
+    </div>
+
+    <script>
+      (function(){
+        const btn = document.getElementById('copy-mac-cmd');
+        const cmd = document.getElementById('mac-cmd');
+        if(!btn || !cmd) return;
+        btn.addEventListener('click', async () => {
+          try{
+            await navigator.clipboard.writeText(cmd.textContent.trim());
+            btn.textContent = 'Kopiert';
+            setTimeout(()=> btn.textContent = 'Kopieren', 1500);
+          }catch(e){
+            btn.textContent = 'Fehler';
+            setTimeout(()=> btn.textContent = 'Kopieren', 1500);
+          }
+        });
+      })();
+    </script>
         ausführen, danach Klarwert normal per Doppelklick starten.
       </li>
     </ol>

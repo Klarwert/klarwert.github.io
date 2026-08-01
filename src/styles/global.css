@@ -19,6 +19,12 @@
   --font-sans: "Inter", sans-serif;
 }
 
+:root {
+  --header-height: 4rem; /* header (h-16) height used by layout */
+}
+
+html { scroll-padding-top: var(--header-height); }
+
 body {
   background-color: var(--color-paper);
   color: var(--color-charcoal);
