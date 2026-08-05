@@ -13,17 +13,59 @@ interface Props {
 const { fallbackLabel, primaryPatterns, secondaryPatterns = [] } = Astro.props;
 ---
 
-<div class="mt-6">
-  <a
-    id="primary-download"
-    href={RELEASES_LATEST_URL}
-    class="inline-block rounded-klein bg-petrol px-5 py-3 font-medium text-card"
-  >
+<div class="primary-download">
+  <a id="primary-download" href={RELEASES_LATEST_URL} class="primary-download-btn">
     {fallbackLabel}
   </a>
-  <p id="primary-download-hint" class="mt-2 text-xs text-slate"></p>
-  <ul id="secondary-downloads" class="mt-2 space-y-0.5 text-xs text-slate"></ul>
+  <p id="primary-download-hint" class="primary-download-hint"></p>
+  <ul id="secondary-downloads" class="secondary-downloads"></ul>
 </div>
+
+<style>
+  .primary-download-btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--petrol);
+    color: var(--paper);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.8125rem 1.5rem;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .primary-download-btn:hover {
+    background: var(--petrol-light);
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  .primary-download-hint {
+    margin-top: 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--slate);
+  }
+
+  .secondary-downloads {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .secondary-downloads :global(a) {
+    color: var(--slate);
+    text-decoration: underline;
+  }
+
+  .secondary-downloads :global(a:hover) {
+    color: var(--petrol);
+  }
+</style>
 
 <script define:vars={{ primaryPatterns, secondaryPatterns, appRepo: APP_REPO }}>
   // Rein clientseitig: ermittelt beim Laden die tatsächlich aktuelle Installationsdatei aus dem

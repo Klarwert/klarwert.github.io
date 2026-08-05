@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const rows = [
+  { label: "Cloud", ok: false },
+  { label: "Benutzerkonto", ok: false },
+  { label: "Bankzugang", ok: false },
+  { label: "Server für Finanzdaten", ok: false },
+  { label: "Tracking", ok: false },
+  { label: "Lokale Datenbank", ok: true },
+  { label: "Open Source", ok: true },
+];
+---
+
+<Layout title="Klarwert – Datenschutz" description="Was Klarwert lokal speichert, was es niemals überträgt, und welche Netzwerkverbindungen die App überhaupt nutzt.">
+  <section class="mx-auto max-w-[720px] px-6 py-20">
+    <h1 class="text-3xl font-serif text-petrol">Deine Daten. Dein Rechner.</h1>
+
+    <table class="mt-8 w-full border-collapse text-sm">
+      <thead>
+        <tr class="border-b border-petrol/10">
+          <th class="py-2 text-left font-medium text-slate"></th>
+          <th class="py-2 text-right font-medium text-slate">Klarwert</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr class="border-b border-petrol/5">
+            <td class="py-2.5 text-charcoal">{r.label}</td>
+            <td class="py-2.5 text-right text-lg" aria-label={r.ok ? "ja" : "nein"}>
+              {r.ok ? <span class="text-sage">✅</span> : <span class="text-brick">❌</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <h2 class="mt-12 text-xl text-petrol">Was Klarwert lokal speichert</h2>
+    <p class="mt-3 text-sm leading-relaxed text-charcoal/80">
+      Kontobewegungen, Kategorien, Verträge und Einstellungen – alles in einer
+      lokalen SQLite-Datei auf deinem Gerät.
+    </p>
+
+    <h2 class="mt-10 text-xl text-petrol">Was Klarwert niemals überträgt</h2>
+    <p class="mt-3 text-sm leading-relaxed text-charcoal/80">
+      Bankzugangsdaten, Kontostände und Transaktionsdetails verlassen dein Gerät nicht.
+    </p>
+
+    <h2 class="mt-10 text-xl text-petrol">Welche Netzwerkverbindungen die App überhaupt nutzt</h2>
+    <p class="mt-3 text-sm leading-relaxed text-charcoal/80">
+      Ehrlich benannt: der optionale Community-Regel-Update-Check gegen GitHub ist
+      die einzige Netzwerkverbindung, die die App von sich aus aufbaut. Er lädt
+      ausschließlich Kategorisierungsregeln herunter – nie eigene Daten hoch.
+    </p>
+  </section>
+</Layout>
