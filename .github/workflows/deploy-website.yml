@@ -32,6 +32,12 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run smoke tests
+        run: npm test
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

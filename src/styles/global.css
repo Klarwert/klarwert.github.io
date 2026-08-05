@@ -16,25 +16,12 @@ main.site-main > .site-content {
   padding-top: 6rem;    /* leave space for fixed header (approx 96px) */
 }
 
-/* Defensive: ensure any element using Tailwind-like utility 'mx-auto max-w-[1120px]' still behaves */
-.mx-auto.max-w-[1120px] { max-width: 1120px; margin-left: auto; margin-right: auto; }
-
 /* Make wide pages responsive and avoid right-side white bar by forcing full-bleed backgrounds
    while content sits centered inside the site-content container */
 .site-bleed {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-}
-
-/* Primary download button defensive styles (in case utility classes are missing) */
-#primary-download {
-  display: inline-block;
-  background: var(--petrol) !important;
-  color: var(--card) !important;
-  padding: 0.625rem 1.25rem;
-  border-radius: 10px;
-  text-decoration: none;
 }
 
 /* Code block copy button: ensure contrast and visibility */

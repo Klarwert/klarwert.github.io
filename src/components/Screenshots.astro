@@ -1,3 +1,12 @@
+---
+const markers = [
+  { n: 1, top: "51%", left: "43%", label: "Geldfluss", text: "„Wo ist dein Geld diesen Monat hingeflossen?“" },
+  { n: 2, top: "51%", left: "71%", label: "Kategorien", text: "„Lebensmittel, Wohnen, Mobilität – automatisch erkannt.“" },
+  { n: 3, top: "16%", left: "74%", label: "Budgets", text: "„Nicht erst am Monatsende merken, dass du drüber bist.“" },
+  { n: 4, top: "16%", left: "21%", label: "Kontostand", text: "„Konten und Depot gemeinsam im Blick.“" },
+];
+---
+
 <section class="screenshots-section reveal">
   <div class="section-inner">
     <h2>So sieht Klarwert aus</h2>
@@ -5,13 +14,23 @@
 
     <div class="mockup-wrap">
       <div class="mockup-frame">
-        <div class="mockup-screen">
+        <div class="mockup-screen annotated">
           <img
             src="/klarwert-dashboard-dummy.svg"
             alt="Klarwert Übersichts-Dashboard mit Sankey-Geldfluss, Kategorien-Donut und KPI-Karten"
             loading="lazy"
           />
           <!-- Platzhalter, ersetzen sobald echte Screenshots vorliegen -->
+
+          {markers.map((m) => (
+            <details class="marker" style={`top:${m.top}; left:${m.left};`}>
+              <summary aria-label={`Erklärung: ${m.label}`}>{m.n}</summary>
+              <div class="marker-tooltip">
+                <strong>{m.label}</strong>
+                <p>{m.text}</p>
+              </div>
+            </details>
+          ))}
         </div>
         <div class="mockup-chin"></div>
       </div>
@@ -64,6 +83,7 @@
   }
 
   .mockup-screen {
+    position: relative;
     aspect-ratio: 16 / 10;
     overflow: hidden;
     background: var(--paper);
@@ -81,5 +101,72 @@
     height: 14px;
     background: rgba(255,255,255,0.06);
     border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ── Annotation markers ── */
+  .marker {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+
+  .marker summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--petrol);
+    color: var(--paper);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    box-shadow: 0 0 0 4px rgba(255, 253, 248, 0.55), 0 4px 12px rgba(18, 49, 56, 0.35);
+  }
+
+  .marker summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .marker summary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .marker-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 220px;
+    background: var(--card);
+    border: 1px solid rgba(18, 49, 56, 0.12);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 24px rgba(18, 49, 56, 0.18);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    z-index: 5;
+  }
+
+  .marker-tooltip strong {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--petrol);
+    margin-bottom: 0.15rem;
+  }
+
+  .marker-tooltip p {
+    font-size: 0.75rem;
+    color: var(--slate);
+    line-height: 1.45;
+  }
+
+  @media (max-width: 640px) {
+    .marker summary { width: 22px; height: 22px; font-size: 0.7rem; }
+    .marker-tooltip { max-width: 160px; }
   }
 </style>

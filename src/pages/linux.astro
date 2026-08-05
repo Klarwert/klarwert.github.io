@@ -1,42 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PrimaryDownload from "../components/PrimaryDownload.astro";
+
+const target = "/download#linux";
 ---
 
 <Layout title="Klarwert für Linux" description="Klarwert für Linux herunterladen und installieren.">
-  <section class="mx-auto max-w-2xl px-6 py-20">
-    <h1 class="text-3xl text-petrol">Klarwert für Linux</h1>
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+  </Fragment>
 
-    <PrimaryDownload
-      fallbackLabel="AppImage herunterladen"
-      primaryPatterns={["\\.appimage$"]}
-      secondaryPatterns={[
-        { label: "Alternative: .deb-Paket (Debian/Ubuntu)", pattern: "\\.deb$" },
-        { label: "Alternative: .rpm-Paket (Fedora/openSUSE)", pattern: "\\.rpm$" },
-      ]}
-    />
-
-    <h2 class="mt-10 text-xl text-petrol">Installation</h2>
-    <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
-      <li>.AppImage-Datei herunterladen.</li>
-      <li>
-        Ausführbar machen: Rechtsklick → Eigenschaften → „Ausführung erlauben" (oder <code>chmod +x Klarwert*.AppImage</code>
-        im Terminal).
-      </li>
-      <li>Doppelklick startet Klarwert direkt, keine Installation nötig.</li>
-    </ol>
-
-    <h2 class="mt-10 text-xl text-petrol">Systemvoraussetzungen</h2>
-    <p class="mt-2 text-sm text-charcoal/80">
-      Aktuelle Distribution mit WebKitGTK (bei den gängigen Distributionen standardmäßig vorhanden).
+  <section class="mx-auto max-w-[880px] px-6 py-20 text-center">
+    <p class="text-sm text-slate">
+      Weiterleitung zu <a href={target} class="underline text-petrol">/download#linux</a> …
     </p>
+    <noscript>
+      <p class="mt-2 text-sm">
+        Falls die Weiterleitung nicht automatisch startet: <a href={target} class="underline text-petrol">hier klicken</a>.
+      </p>
+    </noscript>
   </section>
-  <script>
-    // If JavaScript is enabled, route to the unified download page and preselect linux tab.
-    if (typeof window !== 'undefined') {
-      if (location.pathname !== '/download' || !location.hash.includes('linux')) {
-        location.replace('/download#linux');
-      }
-    }
-  </script>
 </Layout>

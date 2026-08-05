@@ -1,0 +1,76 @@
+<section class="data-privacy reveal">
+  <div class="section-inner">
+    <h2>Deine Finanzdaten gehören dir.</h2>
+    <p class="data-privacy-lead">
+      Klarwert hat keinen Server, keine Cloud, kein Login.
+      Deine Bankumsätze werden auf deinem Gerät verarbeitet – und bleiben dort.
+    </p>
+
+    <div class="flow glass-card" role="img" aria-label="Datenfluss: Online-Banking zu CSV/Excel zu Klarwert zu deiner lokalen Datenbank">
+      <span class="flow-step">Online-Banking</span>
+      <span class="flow-arrow" aria-hidden="true">→</span>
+      <span class="flow-step">CSV/Excel</span>
+      <span class="flow-arrow" aria-hidden="true">→</span>
+      <span class="flow-step">Klarwert</span>
+      <span class="flow-arrow" aria-hidden="true">→</span>
+      <span class="flow-step">deine lokale Datenbank</span>
+    </div>
+
+    <p class="data-privacy-tags">✕ keine Cloud &middot; ✕ kein Login &middot; ✕ kein Tracking</p>
+  </div>
+</section>
+
+<style>
+  .data-privacy {
+    padding: 4.5rem 1.5rem;
+    background: var(--paper);
+    text-align: center;
+  }
+
+  .section-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .data-privacy h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    color: var(--petrol);
+    margin-bottom: 0.75rem;
+  }
+
+  .data-privacy-lead {
+    font-size: 1rem;
+    color: var(--slate);
+    line-height: 1.65;
+    max-width: 48ch;
+    margin: 0 auto 2rem;
+  }
+
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    padding: 1.25rem 1.5rem;
+    margin: 0 auto;
+  }
+
+  .flow-step {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--charcoal);
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--slate);
+  }
+
+  .data-privacy-tags {
+    margin-top: 1.5rem;
+    font-size: 0.8125rem;
+    color: var(--slate);
+  }
+</style>

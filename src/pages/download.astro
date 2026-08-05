@@ -2,93 +2,236 @@
 import Layout from "../layouts/Layout.astro";
 import PrimaryDownload from "../components/PrimaryDownload.astro";
 import CodeBlock from "../components/CodeBlock.astro";
+
+const panels = [
+  { os: "windows", label: "Windows" },
+  { os: "macos", label: "macOS" },
+  { os: "linux", label: "Linux" },
+];
 ---
 
 <Layout title="Klarwert herunterladen" description="Lade Klarwert für Windows, macOS oder Linux herunter.">
-  <section class="mx-auto max-w-[1120px] px-6 py-20">
-    <h1 class="text-3xl text-petrol">Herunterladen</h1>
-
-    <div class="mt-6">
-      <div id="download-tabs" class="flex gap-3">
-        <button data-os="windows" class="tab-btn rounded-klein px-4 py-2 bg-card border">Windows</button>
-        <button data-os="macos" class="tab-btn rounded-klein px-4 py-2">macOS</button>
-        <button data-os="linux" class="tab-btn rounded-klein px-4 py-2">Linux</button>
-      </div>
-
-      <div class="mt-6">
-        <div data-panel="windows" class="download-panel" style="display:block;">
-          <PrimaryDownload fallbackLabel="Setup herunterladen" primaryPatterns={["-setup\\.exe$","\\.msi$"]} secondaryPatterns={[{label: 'Alternative: .msi-Installer', pattern: '\\.msi$'}]} />
-          <h2 class="mt-8 text-xl text-petrol">Installation</h2>
-          <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
-            <li>Datei herunterladen und ausführen.</li>
-            <li>
-              Windows zeigt eventuell die Meldung <strong>„Windows hat Ihren PC geschützt"</strong> (SmartScreen). Das ist normal bei neuer, unsignierter Software – klicke auf <strong>„Weitere Informationen"</strong> und dann <strong>„Trotzdem ausführen"</strong>.
-            </li>
-            <li>Installation folgen, Klarwert startet automatisch.</li>
-          </ol>
-          <h2 class="mt-6 text-xl text-petrol">Systemvoraussetzungen</h2>
-          <p class="mt-2 text-sm text-charcoal/80">Windows 10 (Version 2004+) oder Windows 11. WebView2 wird benötigt.</p>
-        </div>
-
-        <div data-panel="macos" class="download-panel" style="display:none;">
-          <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
-          <h2 class="mt-8 text-xl text-petrol">Installation</h2>
-          <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
-            <li>.dmg-Datei öffnen, Klarwert in den Programme-Ordner ziehen.</li>
-            <li>
-              Klarwert ist (noch) nicht bei Apple signiert/notarisiert. Beim ersten Öffnen meldet macOS deshalb entweder
-              „Klarwert kann nicht geöffnet werden, da der Entwickler nicht verifiziert werden kann" <strong>oder</strong>
-              „Klarwert ist beschädigt und kann nicht geöffnet werden" – beides ist normal, die Datei ist nicht wirklich beschädigt.
-            </li>
-            <li>
-              Bei der ersten Meldung reicht: <strong>Systemeinstellungen → Datenschutz & Sicherheit</strong> → runter zu „Sicherheit" → <strong>„Trotzdem öffnen"</strong>.
-            </li>
-            <li>
-              Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von macOS):
-              <CodeBlock code="xattr -cr /Applications/Klarwert.app" />
-            </li>
-          </ol>
-          <h2 class="mt-6 text-xl text-petrol">Systemvoraussetzungen</h2>
-          <p class="mt-2 text-sm text-charcoal/80">macOS 12 (Monterey) oder neuer. Apple Silicon empfohlen.</p>
-        </div>
-
-        <div data-panel="linux" class="download-panel" style="display:none;">
-          <PrimaryDownload fallbackLabel="AppImage herunterladen" primaryPatterns={["\\.appimage$"]} secondaryPatterns={[{label: 'Alternative: .deb-Paket (Debian/Ubuntu)', pattern: '\\.deb$'},{label: 'Alternative: .rpm-Paket (Fedora/openSUSE)', pattern: '\\.rpm$'}]} />
-          <h2 class="mt-8 text-xl text-petrol">Installation</h2>
-          <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
-            <li>.AppImage-Datei herunterladen.</li>
-            <li>Ausführbar machen: Rechtsklick → Eigenschaften → „Ausführung erlauben" (oder <code>chmod +x Klarwert*.AppImage</code> im Terminal).</li>
-            <li>Doppelklick startet Klarwert direkt, keine Installation nötig.</li>
-          </ol>
-          <h2 class="mt-6 text-xl text-petrol">Systemvoraussetzungen</h2>
-          <p class="mt-2 text-sm text-charcoal/80">Aktuelle Distribution mit WebKitGTK.</p>
-        </div>
-      </div>
+  <section class="download-page">
+    <div class="download-header">
+      <h1>Herunterladen</h1>
+      <p>Kostenlos für immer. Kein Konto, keine Cloud, kein Abo.</p>
     </div>
 
-    <script>
-      (function(){
-        const tabs = document.querySelectorAll('#download-tabs .tab-btn');
-        const panels = document.querySelectorAll('.download-panel');
-        function show(os){
-          panels.forEach(p=> { p.style.display = (p.dataset.panel===os ? 'block' : 'none'); });
-          tabs.forEach(t=> {
-            if (t.dataset.os===os) {
-              t.classList.add('bg-card','border');
-              t.setAttribute('aria-pressed','true');
-            } else {
-              t.classList.remove('bg-card','border');
-              t.setAttribute('aria-pressed','false');
-            }
-          });
-        }
-        // pick from hash if present, otherwise default to windows
-        const target = (location.hash && location.hash.replace('#','')) || 'windows';
-        show(target);
-        tabs.forEach(t=> t.addEventListener('click', ()=> { show(t.dataset.os); history.replaceState(null,'', '/download#'+t.dataset.os); }));
-        // also support keyboard activation
-        tabs.forEach(t=> t.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(t.dataset.os); history.replaceState(null,'', '/download#'+t.dataset.os); } }));
-      })();
-    </script>
+    <div id="download-tabs" class="os-tabs" role="tablist" aria-label="Betriebssystem auswählen">
+      {panels.map((p) => (
+        <button
+          type="button"
+          role="tab"
+          data-os={p.os}
+          class="os-tab"
+          aria-selected={p.os === "windows" ? "true" : "false"}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="panels">
+      <div id="windows" data-panel="windows" class="download-panel glass-card" style="display:block;">
+        <PrimaryDownload fallbackLabel="Setup herunterladen" primaryPatterns={["-setup\\.exe$","\\.msi$"]} secondaryPatterns={[{label: 'Alternative: .msi-Installer', pattern: '\\.msi$'}]} />
+
+        <h2>Installation</h2>
+        <ol>
+          <li>Datei herunterladen und ausführen.</li>
+          <li>
+            Windows zeigt eventuell die Meldung <strong>„Windows hat Ihren PC geschützt"</strong> (SmartScreen). Das ist normal bei neuer, unsignierter Software – klicke auf <strong>„Weitere Informationen"</strong> und dann <strong>„Trotzdem ausführen"</strong>.
+          </li>
+          <li>Installation folgen, Klarwert startet automatisch.</li>
+        </ol>
+
+        <h2>Systemvoraussetzungen</h2>
+        <p class="requirements">Windows 10 (Version 2004+) oder Windows 11. WebView2 wird benötigt.</p>
+      </div>
+
+      <div id="macos" data-panel="macos" class="download-panel glass-card" style="display:none;">
+        <PrimaryDownload fallbackLabel="Installer herunterladen" primaryPatterns={["\\.dmg$"]} />
+
+        <h2>Installation</h2>
+        <ol>
+          <li>.dmg-Datei öffnen, Klarwert in den Programme-Ordner ziehen.</li>
+          <li>
+            Klarwert ist (noch) nicht bei Apple signiert/notarisiert. Beim ersten Öffnen meldet macOS deshalb entweder
+            „Klarwert kann nicht geöffnet werden, da der Entwickler nicht verifiziert werden kann" <strong>oder</strong> „Klarwert ist beschädigt und kann nicht geöffnet werden" – beides ist normal, die Datei ist nicht wirklich beschädigt.
+          </li>
+          <li>
+            Bei der ersten Meldung reicht: <strong>Systemeinstellungen → Datenschutz & Sicherheit</strong> → runter zu „Sicherheit" → <strong>„Trotzdem öffnen"</strong>.
+          </li>
+          <li>
+            Erscheint stattdessen „ist beschädigt", hilft das Terminal (einmalig, entfernt nur die Downloadmarkierung von macOS):
+            <CodeBlock code="xattr -cr /Applications/Klarwert.app" />
+          </li>
+        </ol>
+
+        <h2>Systemvoraussetzungen</h2>
+        <p class="requirements">macOS 12 (Monterey) oder neuer. Apple Silicon empfohlen.</p>
+      </div>
+
+      <div id="linux" data-panel="linux" class="download-panel glass-card" style="display:none;">
+        <PrimaryDownload fallbackLabel="AppImage herunterladen" primaryPatterns={["\\.appimage$"]} secondaryPatterns={[{label: 'Alternative: .deb-Paket (Debian/Ubuntu)', pattern: '\\.deb$'},{label: 'Alternative: .rpm-Paket (Fedora/openSUSE)', pattern: '\\.rpm$'}]} />
+
+        <h2>Installation</h2>
+        <ol>
+          <li>.AppImage-Datei herunterladen.</li>
+          <li>Ausführbar machen: Rechtsklick → Eigenschaften → „Ausführung erlauben" (oder <code>chmod +x Klarwert*.AppImage</code> im Terminal).</li>
+          <li>Doppelklick startet Klarwert direkt, keine Installation nötig.</li>
+        </ol>
+
+        <h2>Systemvoraussetzungen</h2>
+        <p class="requirements">Aktuelle Distribution mit WebKitGTK.</p>
+      </div>
+    </div>
   </section>
+
+  <script>
+    (function () {
+      const tabs = document.querySelectorAll<HTMLButtonElement>('#download-tabs .os-tab');
+      const panels = document.querySelectorAll<HTMLElement>('.download-panel');
+
+      function show(os: string) {
+        panels.forEach((p) => {
+          p.style.display = p.dataset.panel === os ? 'block' : 'none';
+        });
+        tabs.forEach((t) => {
+          t.setAttribute('aria-selected', t.dataset.os === os ? 'true' : 'false');
+        });
+      }
+
+      const target = (location.hash && location.hash.replace('#', '')) || 'windows';
+      show(target);
+
+      tabs.forEach((t) =>
+        t.addEventListener('click', () => {
+          show(t.dataset.os!);
+          history.replaceState(null, '', '/download#' + t.dataset.os);
+        })
+      );
+
+      // Same-document hash changes (e.g. a bookmarked #linux link opened while
+      // /download is already loaded in this tab) don't trigger a fresh page load,
+      // so the initial-hash read above wouldn't run again without this.
+      window.addEventListener('hashchange', () => {
+        show((location.hash && location.hash.replace('#', '')) || 'windows');
+      });
+    })();
+  </script>
+
+  <style>
+    .download-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .download-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .download-header h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      color: var(--petrol);
+      margin-bottom: 0.5rem;
+    }
+
+    .download-header p {
+      font-size: 1rem;
+      color: var(--slate);
+    }
+
+    .os-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid rgba(18, 49, 56, 0.08);
+      border-radius: var(--radius-pill);
+      padding: 0.375rem;
+      max-width: fit-content;
+      margin: 0 auto 2rem;
+    }
+
+    .os-tab {
+      appearance: none;
+      border: none;
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--slate);
+      padding: 0.625rem 1.5rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .os-tab:hover {
+      color: var(--petrol);
+    }
+
+    .os-tab[aria-selected="true"] {
+      background: var(--petrol);
+      color: var(--paper);
+    }
+
+    .os-tab:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .download-panel {
+      padding: 2rem 2.25rem 2.25rem;
+    }
+
+    .download-panel h2 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--petrol);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .download-panel ol {
+      list-style: decimal;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .download-panel ol li {
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      line-height: 1.65;
+    }
+
+    .download-panel ol li strong {
+      color: var(--petrol);
+    }
+
+    .download-panel .requirements {
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .download-panel code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: rgba(18, 49, 56, 0.06);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .os-tabs { max-width: 100%; }
+      .os-tab { flex: 1; padding: 0.625rem 0.75rem; }
+      .download-panel { padding: 1.5rem 1.5rem 1.75rem; }
+    }
+  </style>
 </Layout>

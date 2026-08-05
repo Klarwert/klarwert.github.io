@@ -1,0 +1,87 @@
+---
+const forYou = [
+  "mehrere Konten oder ein Depot hast und den Überblick verlierst",
+  "bisher Excel oder mehrere Apps für deine Finanzen nutzt",
+  "deine Bankzugangsdaten keiner weiteren App geben willst",
+  "lieber selbst entscheidest, statt dir Empfehlungen geben zu lassen",
+];
+
+const notForYou = [
+  "deine Konten automatisch synchronisiert haben willst",
+  "eine fertige Anlageberatung erwartest",
+];
+---
+
+<section id="fuer-wen" class="for-whom reveal">
+  <div class="section-inner">
+    <div class="for-whom-grid">
+      <div class="for-whom-card glass-card">
+        <h3>Klarwert ist für dich, wenn du …</h3>
+        <ul>
+          {forYou.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="for-whom-card glass-card">
+        <h3>Klarwert ist nicht für dich, wenn du …</h3>
+        <ul>
+          {notForYou.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .for-whom {
+    padding: 4.5rem 1.5rem;
+    background: var(--paper);
+  }
+
+  .section-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .for-whom-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .for-whom-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .for-whom-card {
+    padding: 1.75rem 2rem;
+  }
+
+  .for-whom-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    color: var(--petrol);
+    margin-bottom: 1rem;
+  }
+
+  .for-whom-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    list-style: none;
+  }
+
+  .for-whom-card li {
+    font-size: 0.9rem;
+    color: var(--slate);
+    line-height: 1.5;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .for-whom-card li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--petrol);
+  }
+</style>

@@ -1,40 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PrimaryDownload from "../components/PrimaryDownload.astro";
+
+const target = "/download#windows";
 ---
 
 <Layout title="Klarwert für Windows" description="Klarwert für Windows herunterladen und installieren.">
-  <section class="mx-auto max-w-[880px] px-6 py-20">
-    <h1 class="text-3xl text-petrol">Klarwert für Windows</h1>
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+  </Fragment>
 
-    <PrimaryDownload
-      fallbackLabel="Setup herunterladen"
-      primaryPatterns={["-setup\\.exe$", "\\.msi$"]}
-      secondaryPatterns={[{ label: "Alternative: .msi-Installer", pattern: "\\.msi$" }]}
-    />
-
-    <h2 class="mt-10 text-xl text-petrol">Installation</h2>
-    <ol class="mt-4 list-inside list-decimal space-y-2 text-sm text-charcoal/80">
-      <li>Datei herunterladen und ausführen.</li>
-      <li>
-        Windows zeigt eventuell die Meldung <strong>„Windows hat Ihren PC geschützt"</strong> (SmartScreen). Das ist
-        normal bei neuer, unsignierter Software – klicke auf <strong>„Weitere Informationen"</strong> und dann
-        <strong>„Trotzdem ausführen"</strong>.
-      </li>
-      <li>Installation folgen, Klarwert startet automatisch.</li>
-    </ol>
-
-    <h2 class="mt-10 text-xl text-petrol">Systemvoraussetzungen</h2>
-    <p class="mt-2 text-sm text-charcoal/80">
-      Windows 10 (Version 2004+) oder Windows 11. WebView2 ist bei aktuellem Windows bereits vorinstalliert.
+  <section class="mx-auto max-w-[880px] px-6 py-20 text-center">
+    <p class="text-sm text-slate">
+      Weiterleitung zu <a href={target} class="underline text-petrol">/download#windows</a> …
     </p>
+    <noscript>
+      <p class="mt-2 text-sm">
+        Falls die Weiterleitung nicht automatisch startet: <a href={target} class="underline text-petrol">hier klicken</a>.
+      </p>
+    </noscript>
   </section>
-  <script>
-    // If JavaScript is enabled, route to the unified download page and preselect Windows tab.
-    if (typeof window !== 'undefined') {
-      if (location.pathname !== '/download' || !location.hash.includes('windows')) {
-        location.replace('/download#windows');
-      }
-    }
-  </script>
 </Layout>

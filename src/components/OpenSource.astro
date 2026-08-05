@@ -1,0 +1,64 @@
+---
+import { REPO_URL } from "../lib/repo";
+---
+
+<section class="open-source reveal">
+  <div class="section-inner glass-card">
+    <h2>Du musst uns nicht vertrauen.</h2>
+    <p>
+      Klarwert ist Open Source. Du kannst selbst überprüfen, welche Daten
+      gespeichert werden, wie der Import funktioniert und ob irgendetwas
+      an einen Server gesendet wird.
+    </p>
+    <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class="open-source-cta">
+      Quellcode auf GitHub ansehen
+    </a>
+  </div>
+</section>
+
+<style>
+  .open-source {
+    padding: 1rem 1.5rem 4.5rem;
+    background: var(--paper);
+  }
+
+  .section-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    text-align: center;
+  }
+
+  .section-inner h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    color: var(--petrol);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-inner p {
+    font-size: 1rem;
+    color: var(--slate);
+    line-height: 1.65;
+    max-width: 52ch;
+    margin: 0 auto 1.5rem;
+  }
+
+  .open-source-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border: 1.5px solid var(--petrol);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--petrol);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .open-source-cta:hover {
+    background: var(--petrol);
+    color: var(--paper);
+  }
+</style>
